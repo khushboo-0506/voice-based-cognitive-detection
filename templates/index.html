@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Audio Risk Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Upload Audio File</h2>
+        <form action="/predict" method="post" enctype="multipart/form-data">
+            <input type="file" name="audio" accept=".wav" required>
+            <input type="submit" value="Predict Cognitive Risk">
+        </form>
+    </div>
+</body>
+</html>
