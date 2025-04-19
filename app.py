@@ -36,7 +36,7 @@ def transcribe_audio(audio_path):
 
 def extract_features(audio_path, transcript):
     try:
-        y, sr_val = librosa.load(audio_path, sr=None)
+        y, sr_val = librosa.load(audio_path, sr=22050)  # Load with a specific sample rate
         duration = librosa.get_duration(y=y, sr=sr_val)
         tempo, _ = librosa.beat.beat_track(y=y, sr=sr_val)
 
