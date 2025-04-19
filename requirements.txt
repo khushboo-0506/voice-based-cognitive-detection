@@ -1,0 +1,6 @@
+Flask
+librosa
+numpy
+SpeechRecognition
+praat-parselmouth  # ✅ correct package for speech analysis
+gunicorn

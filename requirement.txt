@@ -1,6 +1,0 @@
-Flask
-librosa
-numpy
-SpeechRecognition
-parselmouth
-gunicorn
