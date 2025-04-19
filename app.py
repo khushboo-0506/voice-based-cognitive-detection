@@ -13,7 +13,9 @@ with open('model.pkl', 'rb') as f:
     model = pickle.load(f)
 
 app = Flask(__name__)
-UPLOAD_FOLDER = r"C:\Users\raikh\OneDrive\Desktop\deploy\uploads"
+
+# Set UPLOAD_FOLDER using a relative, OS-independent path
+UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 @app.route('/')
@@ -33,17 +35,17 @@ def transcribe_audio(audio_path):
     return text
 
 def extract_features(audio_path, transcript):
-    y, sr = librosa.load(audio_path, sr=None)
-    duration = librosa.get_duration(y=y, sr=sr)
-    tempo, _ = librosa.beat.beat_track(y=y, sr=sr)
+    y, sr_val = librosa.load(audio_path, sr=None)
+    duration = librosa.get_duration(y=y, sr=sr_val)
+    tempo, _ = librosa.beat.beat_track(y=y, sr=sr_val)
 
-    pitches, magnitudes = librosa.piptrack(y=y, sr=sr)
+    pitches, magnitudes = librosa.piptrack(y=y, sr=sr_val)
     pitches = pitches[pitches > 0]
     mean_pitch = np.mean(pitches)
     pitch_variability = np.std(pitches)
 
     intervals = librosa.effects.split(y, top_db=30)
-    speech_segments = sum((end - start) for start, end in intervals) / sr
+    speech_segments = sum((end - start) for start, end in intervals) / sr_val
     pause_count = len(intervals) - 1
 
     transcript = transcript.lower()
@@ -101,7 +103,7 @@ def predict():
     transcript = transcribe_audio(filepath)
     features = extract_features(filepath, transcript)
 
-    # Prepare feature vector for clustering
+    # Prepare feature vector for prediction
     feature_vector = [[
         features['speech_rate'],
         features['mean_pitch'],

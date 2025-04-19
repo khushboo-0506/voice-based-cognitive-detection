@@ -2,5 +2,11 @@ Flask
 librosa
 numpy
 SpeechRecognition
-praat-parselmouth  # ✅ correct package for speech analysis
+praat-parselmouth
 gunicorn
+scikit-learn
+pandas
+matplotlib
+seaborn
+transformers
+pydub
